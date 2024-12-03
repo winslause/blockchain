@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="jumbotron text-center bg-primary text-white">
+        <h1 class="display-4">Introduction to Blockchain Technology</h1>
+        <p class="lead">Updated today</p>
+    </div>
+
+    <!-- Content Section -->
+    <div class="row mt-5">
+        <!-- Main Content -->
+        <div class="col-md-8">
+            <!-- What is Blockchain Section -->
+            <h2 class="mb-4">What is Blockchain?</h2>
+            <p class="text-justify">
+                Blockchain is a distributed database that records all transactions or digital events shared among participating parties. Each transaction is verified by a majority of participants, ensuring transparency and security.
+            </p>
+
+            <!-- How Blockchain Works -->
+            <h3 class="mt-5">How Does Blockchain Work?</h3>
+            <p class="text-justify">
+                One famous use of blockchain is Bitcoin, a cryptocurrency used for exchanging digital assets online. It operates using cryptographic proof rather than third-party trust. Each transaction is secured through a digital signature.
+            </p>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/blockchain-trncation.png" alt="Blockchain Network" class="img-fluid mt-3 mb-3 rounded shadow-lg">
+
+            <!-- Decentralization Section -->
+            <h3 class="mt-5">Blockchain Decentralization</h3>
+            <p class="text-justify">
+                Blockchain does not rely on a central server or system. Instead, data is distributed across millions of computers worldwide. This decentralized system ensures data is publicly verifiable and incorruptible.
+            </p>
+
+            <!-- Disadvantages Section -->
+            <div class="card mt-5 mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Disadvantages of the Current Transaction System</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Limited use of cash for large transactions</li>
+                        <li class="list-group-item">Slow processing times</li>
+                        <li class="list-group-item">Dependence on third-party verification</li>
+                        <li class="list-group-item">Central servers are vulnerable to compromise</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Building Trust with Blockchain -->
+            <h3 class="mt-5">Building Trust with Blockchain</h3>
+            <p class="text-justify">
+                Blockchain builds trust through its distributed, secure, transparent, consensus-based, and flexible nature. Smart contracts, for example, can automate processes based on predefined conditions.
+            </p>
+        </div>
+
+        <!-- Sidebar: Additional Info -->
+        <div class="col-md-4">
+            <!-- Benefits Section -->
+            <div class="card bg-light mb-4">
+                <div class="card-header">
+                    <h4>Benefits of Blockchain</h4>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Time-saving and cost-effective due to reduced need for intermediaries</li>
+                        <li>Enhanced security and resistance to cyberattacks</li>
+                        <li>Transparent and trustworthy transactions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div class="card bg-light mb-4">
+                <div class="card-header">
+                    <h4>Applications of Blockchain</h4>
+                </div>
+                <div class="card-body">
+                    <p>Leading companies in banking, accounting, airlines, and more are leveraging blockchain to enhance transparency, security, and efficiency in various industries.</p>
+                </div>
+            </div>
+
+            <!-- Future Scope Section -->
+            <div class="card bg-light mb-4">
+                <div class="card-header">
+                    <h4>Future Scope of Blockchain Technology</h4>
+                </div>
+                <div class="card-body">
+                    <p>Blockchain has the potential to revolutionize finance, supply chain management, and IoT through decentralized digital identity, smart contracts, and DeFi.</p>
+                </div>
+            </div>
+
+            <!-- Project Ideas Section -->
+            <div class="card bg-light mb-4">
+                <div class="card-header">
+                    <h4>Project Ideas</h4>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Cryptocurrency wallet</li>
+                        <li>Blockchain Explorer</li>
+                        <li>Smart Contract development</li>
+                        <li>Blockchain-based voting system</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // jQuery for smooth scrolling to sections
+    $(document).ready(function() {
+        $('a[href^="#"]').on('click', function(event) {
+            var target = $($(this).attr('href'));
+            if (target.length) {
+                event.preventDefault();
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+            }
+        });
+    });
+
+    // WebGL for a visual effect (basic animation or background canvas)
+    // Example placeholder, can be replaced with actual WebGL code
+    function initWebGL() {
+        // Placeholder WebGL code for advanced animations
+        console.log("WebGL initialized for blockchain visualization");
+    }
+
+    // Call WebGL initialization on page load
+    window.onload = initWebGL;
+</script>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.jumbotron {
+    background-color: #343a40;
+    color: white;
+}
+
+.footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+}

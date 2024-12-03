@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+    /* General Body Styles */
+html,body {
+
+  font-family: 'Roboto', sans-serif;
+  background-color: #0d0d0d;
+  color: white;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* HUD Header */
+.hud-header {
+  text-align: center;
+  padding-bottom: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.hud-title {
+  font-size: 50px;
+  font-weight: bold;
+  color: #00f9ff;
+}
+
+.hud-subtitle {
+  font-size: 18px;
+  color: #00f9ff;
+  margin: 10px;
+  padding: 10px;
+}
+
+/* 3D WebGL Background */
+.webgl-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+/* Info Panel */
+.info-panel {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+/* Info Section */
+.info-section {
+  padding: 20px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1); /* Optional for visual distinction */
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.info-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #00f9ff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.info-section p {
+  font-size: 18px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.6;
+}
+
+
+.side-panel {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  margin: 30px; /* Add margin to space between the cards */
+  padding: 20px;
+}
+
+.side-panel-title {
+  color: #00f9ff;
+  font-size: 24px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.side-panel-content img {
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  margin: 15px; /* Add margin at the bottom of the image */
+  padding: 15px;
+}
+
+.start-learning-section {
+  padding: 50px;
+  text-align: center;
+  background: #1a1a1a;
+  border-top: 2px solid #00f9ff;
+}
+
+.start-learning-section .section-title {
+  color: #00f9ff;
+  font-size: 40px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.animated-btn {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: #00f9ff;
+  padding: 15px 30px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.animated-btn:hover {
+  background: #007acc;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.btn-animated-hover {
+  animation: btnHover 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes btnHover {
+  0% {
+    background-color: #00f9ff;
+    box-shadow: 0 0 15px #00f9ff;
+  }
+  100% {
+    background-color: #00aaff;
+    box-shadow: 0 0 25px #00aaff;
+  }
+}
+
+/* Hide scrollbar but allow scrolling */
+html, body {
+    overflow: -moz-scrollbars-none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none; /* For Firefox */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+</style>
+<!-- <script>
+  // Remove scrollbars by disabling overflow on body and html
+document.documentElement.style.overflow = 'hidden'; // For the entire page
+document.body.style.overflow = 'hidden'; // For the body content
+
+</script> -->
+
+<!-- Main Container -->
+<div class="container-fluid p-0">
+  <!-- Top Header Section (HUD Style) -->
+  <div class="hud-header" style="margin-top: 20px; padding-top:20px;margin-bottom: 20px; padding-bottom:20px; width:100%;">
+    <h1 class="hud-title">Learn About NFTs</h1>
+    <p class="hud-subtitle">Explore the world of Non-Fungible Tokens and their applications in a futuristic display</p>
+  </div>
+
+  <!-- WebGL Background Section -->
+  <div id="webgl-background" class="webgl-background"></div>
+
+  <!-- Main Content Section -->
+  <div class="content">
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <div class="info-panel">
+          <h2 class="info-title">Introduction to NFTs</h2>
+          <p>
+            Non-fungible tokens (NFTs) are unique digital assets representing ownership of specific physical or digital items, such as artwork, real estate, music, or videos. While digital art is the most common type of NFT, the decentralized technology can be applied to a wide range of virtual and tangible assets and experiences.
+          </p>
+          <p>
+            NFTs use the same blockchain technology that powers cryptocurrencies but are not a currency. They represent ownership of one-of-a-kind digital or physical assets. While NFTs have sold for millions, they're highly speculative assets that aren't for everyone.
+          </p>
+          <p>
+            In 2024, the NFT market has integrated greater technological advancements to improve the efficiency and security of NFTs on the blockchain network. It's also reaching beyond digital art to adopt real-world assets (like tickets and memberships), virtual worlds, fashion, and real estate.
+          </p>
+          <p>
+            However, investing in NFTs has substantial security risks as digital assets are subject to rapid market volatility. Like cryptocurrency, the NFT market is highly volatile, fluctuating asset prices rapidly. One of the major concerns among market experts is the potential for an NFT bubble, where prices are artificially inflated and may eventually burst.
+          </p>
+
+          <!-- Call to Action Button -->
+          <a href="#start-learning" class="btn btn-primary btn-lg animated-btn" id="start-learning-btn">Start Learning</a>
+
+          <!-- More content sections -->
+          <h2 class="info-title">How NFTs Work</h2>
+          <p>
+            You can buy, sell, trade, and create NFTs from online exchanges or marketplaces. The creator or current owner may choose a specific price, or there may be an auction where you'll have to bid on the NFT. Depending on the marketplace, different fees may be associated with each transaction.
+          </p>
+          <p>
+            NFTs are traded on decentralized blockchain platforms, primarily Ethereum. The blockchain's transparency ensures public traceability of NFT ownership, while the option to use a pseudonym protects privacy.
+          </p>
+          <p>
+            At its core, an NFT represents digital proof of ownership of any given item. Smart contracts are essential for managing NFTs and automating the process of assigning ownership during the minting process. Minting involves converting a digital file into a unique digital asset on the blockchain.
+          </p>
+
+          <h2 class="info-title">What are NFTs Used For?</h2>
+          <p>
+            NFTs can represent a wide variety of digital goods such as artwork, items in a game, and even videos from live broadcasts. Some of the most popular types of NFTs include:
+          </p>
+          <ul>
+            <li><strong>Digital Art and Collectibles:</strong> Artists can tokenize their work as an NFT, establishing verifiable ownership.</li>
+            <li><strong>Gaming:</strong> NFTs can represent in-game items, characters, or virtual land, appealing to gamers interested in rare items.</li>
+            <li><strong>Music:</strong> NFTs provide artists with new ways to monetize their work and engage with their audience.</li>
+            <li><strong>Metaverse and Virtual Worlds:</strong> NFTs are used to trade virtual items, avatars, and even real estate within virtual worlds.</li>
+          </ul>
+
+          <!-- Other Applications of NFTs Section -->
+<div class="info-section">
+  <h2 class="info-title">Other Applications of NFTs</h2>
+  <p>
+    As the underlying technology and concept advance, NFTs could have many potential applications beyond digital art and videos. For example, a school could issue an NFT to students who have earned a degree and let employers easily verify an applicant's education. Or, a venue could use NFTs to sell and track event tickets, potentially cutting down on resale fraud.
+  </p>
+  <p>
+    As the NFT market matures and enables innovative business models, it could become a valuable tool for enhancing efficiency and accessibility in verifying the authenticity of assets.
+  </p>
+</div>
+<div class="info-section">
+    <h2 class="info-title">Challenges and Risks</h2>
+        <h5 class="info-title" style="font-size: medium;">Environmental impact</h5>
+        <p>A significant drawback of NFTs is their environmental impact. The creation, storage, and trading of NFTs heavily contribute to electronic waste and high energy consumption, similar to bitcoin mining. NFTs require significant digital storage space, relying on energy-intensive systems like the Interplanetary File System (IPFS). As the number of NFTs continues to grow, so will the energy consumption.</p>
+        <p>E-waste comes from the outdated or broken specialized hardware needed to run the NFT marketplace. Since these machines contain mercury, lead, and cadmium, toxins and greenhouse gas emissions can be released into the environment.</p>
+        <p>Adopting responsible practices can mitigate the environmental impact of NFTs. Recycling outdated or damaged computers can help reduce electronic waste and decrease the energy consumption required for manufacturing new devices.</p>
+        <p>Currently, the NFT community has shifted efforts toward sustainability initiatives and developing more energy-efficient blockchain technologies, such as systems that use renewable energy sources instead of fossil fuels.</p>
+
+        <h5 class="info-title" style="font-size: medium;">Volatility</h5>
+        <p>NFTs are highly speculative assets. Some investors have made thousands or millions of dollars selling NFTs, while others spend a lot of money on worthless digital assets.</p>
+        <p>Generally, the value of NFTs fluctuates significantly, similar to cryptocurrencies. Unlike assets whose value is tied to tangible goods like gold or the US dollar, the value of an NFT is determined by market speculation and supply and demand. Plus, NFTs are hard to compare, resulting in a lack of standardization in assessing value.</p>
+
+        <h5 class="info-title" style="font-size: medium;">Security risks</h5>
+        <p>The high-priced and headline-making NFT craze has historically attracted scammers and fraudsters, so investors should act cautiously. Some scammers may try to sell you something and tell you it's an NFT when it's not. Others might claim they have the right to sell an NFT of a piece of work they don't own and don't create.</p>
+        <p style="color:#00f9ff;">Some of the most common acts of fraud in the NFT marketplace include:</p>
+        <ul>
+          <li><strong>Wash trading:</strong> The act of inflating the price of a digital asset like an NFT or cryptocurrency by buying and selling assets through multiple accounts and manufacturing a heightened appearance of demand.</li>
+          <li><strong>Impersonations and fake NFTs:</strong> Impersonators will duplicate a popular NFT to fool potential buyers into thinking they are buying the real deal.</li>
+          <li><strong>Rug pulling:</strong> When an NFT seller/developer promotes future features that can be applied to a digital asset and lures investors to invest in the project. After that, the seller/developer backs out of the project and retreats with the project funds.</li>
+        </ul>
+        <p>One of the largest NFT scams was a rug-pull scheme in 2022. Le Anh Tian, the founder of Baller Ape Club, launched the collection only to delete the entire website, launder the project's $2.6 million investor funds, and transfer them across multiple blockchains (aka chain-hopping).</p>
+        <p>The Department of Justice charged Le Anh Tuan with conspiracy to commit wire fraud and conspiracy to commit international money laundering on June 30, 2022. The lawsuit has yet to be fully resolved.</p>
+        <p>The best way to avoid getting scammed is to thoroughly research and fact-check information before buying or selling an NFT.</p>
+</div>
+        </div>
+      </div>
+
+     <!-- Side Panel (Optional for Future Sections or CTA) -->
+<div class="col-12 col-md-4">
+  <div class="side-panel">
+    <h4 class="side-panel-title">NFT Gallery</h4>
+    <div class="side-panel-content">
+      <!-- Add a showcase or preview here -->
+      <img src="https://bernardmarr.com/wp-content/uploads/2021/11/What-Are-NFTs-An-Easy-Explanation-For-Anyone.jpg" alt="NFT Preview" class="img-fluid rounded shadow-lg mb-3">
+      <p>View exclusive NFT art collections and learn more about their creators.</p>
+    </div>
+  </div>
+
+  <div class="side-panel">
+    <h4 class="side-panel-title">Benefits of NFTs</h4>
+    <div class="side-panel-content">
+      <p><strong>Proof of ownership:</strong> Since NFTs are securely recorded on a blockchain, there's a level of insurance that assets are one-of-a-kind. This technology can also make it difficult to alter or counterfeit NFTs.</p>
+        <p>"By creating an NFT, creators are able to verify scarcity and authenticity to just about anything digital," says Solo Ceesay, co-founder and CEO of Calaxy. "To compare it to traditional art collecting, there are endless copies of the Mona Lisa in circulation, but there is only one original. NFT technology helps assign the ownership of the original piece."</p>
+        <p>When you buy an NFT, other people may be able to make copies of the image, video, or digital item that you own. But, like buying a unique art or limited-series print, the original is typically more valuable. Blockchain technology also makes authenticating the owner of the original work more readily accessible to the public.</p>
+
+        <h3>Creator empowerment</h3>
+        <p>NFTs empower creators by giving them greater control over their work, fostering direct connections with supporters, and unlocking new revenue opportunities. By offering fractional ownership of their creations, similar to stocks and bonds, creators can democratize access to their work and enable fans to participate in their success.</p>
+        <p>Additionally, subscription-based models can provide a reliable source of income for creators and exclusive content for dedicated supporters.</p>
+        <p>"For creators, NFTs create a seamless way to sell digital art that might not have much of a market. Additionally, there are ways in which creators can get paid fees for each subsequent sale of the art," says Ceesay.</p>
+
+        <h3>Community building</h3>
+        <p>NFTs offer unique benefits to holders, including exclusive content or experiences. This can foster a more active community where creators can directly interact with their fans. Some brands have effectively used NFTs to increase engagement and connect the virtual and physical worlds.</p>
+        <p>For example, fashion brand Dolce & Gabbana's 'Collezione Genesi' NFT collection, released in 2021, aimed to build an online fashion community. Participants could purchase unique virtual fashion designs that could be digitally superimposed onto images and videos.</p>
+        <p>NFTs can serve as innovative reward programs. Starbucks, a notable example, launched a limited-edition NFT collection of 2,000 unique Siren pieces in 2023 on the Polygon network. Holders of these NFTs gained access to an exclusive rewards program featuring exclusive digital content, rewards, and live events.</p>
+
+        
+    </div>
+  </div>
+</div>
+  
+
+
+
+
+
+    </div>
+  </div>
+
+  <!-- Start Learning Section -->
+  <!-- <div id="start-learning" class="start-learning-section">
+    <h2 class="section-title">Get Started with NFTs</h2>
+    <p>Click on the sections below to begin learning and exploring the fascinating world of NFTs!</p>
+  </div>
+</div> -->
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/three@0.143.0/build/three.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // WebGL Background setup (HUD effect)
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.getElementById('webgl-background').appendChild(renderer.domElement);
+
+  const geometry = new THREE.SphereGeometry(1, 32, 32);
+  const material = new THREE.MeshBasicMaterial({ color: 0x00f9ff, wireframe: true });
+  const sphere = new THREE.Mesh(geometry, material);
+  scene.add(sphere);
+
+  camera.position.z = 5;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    sphere.rotation.x += 0.01;
+    sphere.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  }
+
+  animate();
+</script>
+{% endblock %}

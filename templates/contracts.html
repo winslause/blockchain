@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<!-- Sidebar with Table of Contents -->
+<div class="sidebar card bg-dark text-white p-4 position-fixed" style="width: 250px; height: 100vh;">
+    <h5 class="mb-4">Table of Contents</h5>
+    <ul class="toc list-unstyled">
+        <li><a href="#smart-contracts" class="text-light">What are Smart Contracts?</a></li>
+        <li><a href="#definition" class="text-light">Definition</a></li>
+        <li><a href="#why-important" class="text-light">Why are Smart Contracts Important?</a></li>
+        <li><a href="#examples" class="text-light">Examples of Smart Contract Coins</a></li>
+        <li><a href="#how-work" class="text-light">How Do Smart Contracts Work?</a></li>
+        <li><a href="#resources" class="text-light">More Resources</a></li>
+    </ul>
+</div>
+
+
+<!-- Main Content -->
+<div class="main-content ms-5 p-4" style="margin-left: 260px;">
+    <!-- Image at the top -->
+<div class="text-center mb-4">
+    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20220527093234/Howdoesasmartcontractwork1.jpg" 
+         alt="Smart Contract Insurance" class="img-fluid">
+</div>
+    <!-- Particle Background (WebGL) -->
+    <canvas id="particle-canvas" style="position: absolute; z-index: -1; top: 0; left: 0; width: 100%; height: 100vh;"></canvas>
+
+    <div class="row">
+        <!-- Card 1 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm bg-light animate__animated animate__fadeInUp" id="smart-contracts">
+                <div class="card-body">
+                    <h2 class="card-title">Smart Contracts</h2>
+                    <p>Smart contracts are computer protocols that digitally facilitate the verification, control, or execution of an agreement. They run on blockchain platforms, automating transactions without intermediaries.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm bg-light animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <h3 id="definition">Definition</h3>
+                    <p>A smart contract, like any contract, establishes the terms of an agreement. Unlike traditional contracts, a smart contract’s terms are executed as code running on a blockchain like Ethereum.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm bg-light animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <h4 id="why-important">Why are Smart Contracts Important?</h4>
+                    <p>Smart contracts allow developers to build a wide variety of decentralized apps (dapps) and tokens. They’re used in everything from financial tools to logistics and games, running on a blockchain.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm bg-light animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <h4 id="examples">Examples of Smart Contract Coins</h4>
+                    <ul>
+                        <li><strong>Ethereum (ETH):</strong> The first and most popular platform for smart contracts.</li>
+                        <li><strong>EOS (EOS):</strong> A blockchain platform designed for decentralized applications.</li>
+                        <li><strong>Tron (TRX):</strong> A blockchain aiming to decentralize the web.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm bg-light animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <h4 id="how-work">How Do Smart Contracts Work?</h4>
+                    <p>Smart contracts automate exchanges, running without a central authority on decentralized blockchain networks. Their code is transparent and ensures execution according to set terms.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-sm bg-light animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <h4 id="resources">More Resources</h4>
+                    <ul>
+                        <li>Digital Options</li>
+                        <li>FinTech</li>
+                        <li>Distributed Ledger Technology</li>
+                        <li>Machine Learning in Finance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- WebGL Animation Script -->
+<script>
+    // Basic particle effect
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    const particlesArray = [];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 5 + 1;
+            this.speedX = Math.random() * 3 - 1.5;
+            this.speedY = Math.random() * 3 - 1.5;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.size > 0.2) this.size -= 0.1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(255,255,255,0.7)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        for (let i = 0; i < 100; i++) {
+            particlesArray.push(new Particle());
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach((particle, index) => {
+            particle.update();
+            particle.draw();
+            if (particle.size <= 0.2) {
+                particlesArray.splice(index, 1);
+                particlesArray.push(new Particle());
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+    // Resize canvas when window resizes
+    window.addEventListener('resize', function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
+    });
+</script>
+
+<!-- jQuery for smooth scrolling -->
+<script>
+    $(document).ready(function () {
+        // Smooth scrolling for sidebar links
+        $(".toc a").on("click", function (e) {
+            if (this.hash !== "") {
+                e.preventDefault();
+                let hash = this.hash;
+                $("html, body").animate({
+                    scrollTop: $(hash).offset().top
+                }, 800, function () {
+                    window.location.hash = hash;
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

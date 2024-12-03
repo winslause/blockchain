@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Trading Dashboard</h2>
+    <p>Get live market data and execute trades.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>BTC/USDT Live Chart</h4>
+            <canvas id="btcChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h4>ETH/USDT Live Chart</h4>
+            <canvas id="ethChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Market Overview and Prediction side by side -->
+    <div class="row mt-5">
+        <!-- Market Overview Column -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Market Overview</h5>
+                    <p id="btcPrice">BTC/USDT: $---</p>
+                    <p id="ethPrice">ETH/USDT: $---</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prediction Column -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Price Prediction</h5>
+                    <p id="btcPrediction">Predicted BTC/USDT: $---</p>
+                    <p id="ethPrediction">Predicted ETH/USDT: $---</p>
+                    <p id="btcDifference">BTC Difference: $---</p>
+                    <p id="ethDifference">ETH Difference: $---</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize empty arrays to store price data and timestamps
+    let btcPrices = [];
+    let ethPrices = [];
+    let timestamps = [];
+
+    // Initialize BTC/USDT chart
+    var btcCtx = document.getElementById('btcChart').getContext('2d');
+    var btcChart = new Chart(btcCtx, {
+        type: 'line',
+        data: {
+            labels: timestamps, // Time axis
+            datasets: [{
+                label: 'BTC/USDT',
+                data: btcPrices,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'minute'
+                    }
+                },
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+
+    // Initialize ETH/USDT chart
+    var ethCtx = document.getElementById('ethChart').getContext('2d');
+    var ethChart = new Chart(ethCtx, {
+        type: 'line',
+        data: {
+            labels: timestamps, // Time axis
+            datasets: [{
+                label: 'ETH/USDT',
+                data: ethPrices,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'minute'
+                    }
+                },
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+
+    // Function to calculate the simple moving average for prediction
+    function calculateSMA(data, windowSize) {
+        if (data.length < windowSize) return null; // Not enough data to calculate
+
+        let sum = 0;
+        for (let i = data.length - windowSize; i < data.length; i++) {
+            sum += data[i];
+        }
+        return sum / windowSize;
+    }
+
+    // Function to fetch data and update charts
+    function fetchBinanceData() {
+        $.ajax({
+            url: 'https://api.binance.com/api/v3/ticker/price',
+            method: 'GET',
+            success: function(data) {
+                let currentTime = new Date(); // Get current time for x-axis
+                timestamps.push(currentTime); // Add timestamp
+
+                let btcCurrentPrice = null;
+                let ethCurrentPrice = null;
+
+                // Loop through the data to find BTC and ETH prices
+                data.forEach(function(item) {
+                    if (item.symbol === 'BTCUSDT') {
+                        btcCurrentPrice = parseFloat(item.price);
+                        $('#btcPrice').text('BTC/USDT: $' + btcCurrentPrice);
+                        btcPrices.push(btcCurrentPrice); // Push BTC price to array
+                    }
+                    if (item.symbol === 'ETHUSDT') {
+                        ethCurrentPrice = parseFloat(item.price);
+                        $('#ethPrice').text('ETH/USDT: $' + ethCurrentPrice);
+                        ethPrices.push(ethCurrentPrice); // Push ETH price to array
+                    }
+                });
+
+                // Limit data points to the last 10 prices
+                if (timestamps.length > 10) {
+                    timestamps.shift(); // Remove oldest timestamp
+                    btcPrices.shift();  // Remove oldest BTC price
+                    ethPrices.shift();  // Remove oldest ETH price
+                }
+
+                // Update both charts with new data
+                btcChart.update();
+                ethChart.update();
+
+                // Make predictions using a simple moving average (SMA) of the last 5 data points
+                let btcPrediction = calculateSMA(btcPrices, 5);
+                let ethPrediction = calculateSMA(ethPrices, 5);
+
+                if (btcPrediction) {
+                    $('#btcPrediction').text('Predicted BTC/USDT: $' + btcPrediction.toFixed(2));
+                }
+                if (ethPrediction) {
+                    $('#ethPrediction').text('Predicted ETH/USDT: $' + ethPrediction.toFixed(2));
+                }
+
+                // Calculate and display the difference between current price and prediction
+                if (btcCurrentPrice && btcPrediction) {
+                    let btcDifference = btcCurrentPrice - btcPrediction;
+                    $('#btcDifference').text('BTC Difference: $' + btcDifference.toFixed(2));
+                }
+                if (ethCurrentPrice && ethPrediction) {
+                    let ethDifference = ethCurrentPrice - ethPrediction;
+                    $('#ethDifference').text('ETH Difference: $' + ethDifference.toFixed(2));
+                }
+            },
+            error: function(error) {
+                console.log('Error fetching Binance API data', error);
+            }
+        });
+    }
+
+    // Fetch Binance data every 5 seconds
+    setInterval(fetchBinanceData, 5000);
+});
+</script>
+{% endblock %}

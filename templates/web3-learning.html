@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Web3 Learning Section</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Blockchain Basics</h5>
+                    <p>Learn how blockchain works.</p>
+                    <a href="{{ url_for('blockchain') }}" class="btn btn-primary">Start Learning</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Smart Contracts</h5>
+                    <p>Discover how smart contracts operate.</p>
+                    <a href="{{ url_for('contracts') }}" class="btn btn-primary">Start Learning</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">NFTs</h5>
+                    <p>Learn about Non-Fungible Tokens (NFTs).</p>
+                    <a href="/nfts" class="btn btn-primary">Start Learning</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
